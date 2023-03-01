@@ -1,6 +1,6 @@
-import "./picture.css";
-import { getPic } from "../api/getPic";
-import { getPicMock } from "../mock/getPic";
+import "@/pages/picture.css";
+import { getPic } from "@/api/getPic";
+import { getPicMock } from "@/mock/getPic";
 import React from "react";
 /**
  * desc: 自动换图片

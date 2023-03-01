@@ -1,46 +1,57 @@
 import axios from "axios";
 
 let time = 0;
+function random(maxNum){
+  return Math.random() * (maxNum + 1)  | 0;
+}
 
-const apiVal = {
-  categories: {
-    100: "普通",
-    "010": "动漫",
-    "001": "人物",
-  },
+export const apiEnums = {
   purity: {
-    100: "正常",
-    "010": "开放",
-    "001": "贤者",
+    0: "100", //"正常"
+    1: "010", //"开放"
+    2: "001", // "贤者" 似乎已废弃
+  },
+  categories: {
+    0: 100, // "普通"
+    1: "010", // "动漫"
+    2: "001", //"人物"
   },
   sorting: {
-    "date-added": "新增",
-    random: "随机",
-    views: "浏览",
-    favorites: "收藏",
-    toplist: "置顶",
+    0: "date-added", // "新增"
+    1: "random", // "随机"
+    2: "views", // "浏览"
+    3: "favorites", // "收藏"
+    4: "toplist", // "置顶"
   },
   atleast: {
-    "1080p": "1920x1080",
-    "2k": "2560x1440",
-    "4k": "3840x2160",
+    0: "1920x1080",
+    1: "2560x1440",
+    2: "3840x2160",
   },
 };
 const isDev = process.env.NODE_ENV === "development"; // development|production
 const baseUrl = isDev ? "/wallhaven" : "https://wallhaven.cc";
+
+const defaultVal = {
+  purity: apiEnums.purity[random(1)],
+  categories: apiEnums.categories[random(2)],
+  sorting: apiEnums.sorting[random(4)],
+  atleast: apiEnums.atleast[random(2)],
+}
+
 export const getPic = async (
-  purity = "010",
+  purity = defaultVal.purity,
   options = {
-    categories: "100",
-    sorting: "random",
-    atleast: apiVal.atleast["4k"],
+    categories: defaultVal.categories,
+    sorting: defaultVal.sorting,
+    atleast: defaultVal.atleast,
   },
 ) => {
   // 默认值
   const {
-    categories = "100",
-    sorting = "random",
-    atleast = apiVal.atleast["4k"],
+    categories = defaultVal.categories,
+    sorting = defaultVal.sorting,
+    atleast = defaultVal.atleast,
   } = options;
   let api =
     baseUrl +

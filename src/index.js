@@ -8,5 +8,5 @@ root.render(
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>
-    <Picture purity="100" />
+    <Picture />
   );

@@ -24,14 +24,11 @@ class Pic extends React.Component {
       picList: res,
       curImg: res[0],
     });
-    res = await getPic(this.props.purity || '010');
-    this.timeId = setTimeout(()=>{
-      clearTimeout(this.timeId);
-      this.setState({
-        picList: res,
-        curImg: res[0],
-      });
-    },25000)
+    res = await getPic();
+    this.setState({
+      picList: res,
+      curImg: res[0],
+    });
     
   }
 
@@ -68,6 +65,7 @@ class Pic extends React.Component {
     }, 25000);
   };
   imgClick =()=>{
+    clearTimeout(this.timeId);
     this.imgError();
   }
   render() {

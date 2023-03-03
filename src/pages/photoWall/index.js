@@ -2,19 +2,20 @@ import "./index.css";
 import { useEffect } from "react";
 import ge1doot from "@/lib/imageTransform3D";
 import { operateDocClass } from "@/utils/dom";
-import {getPicMock} from '@/mock/getPic';
-
-
+// import { getPicMock } from "@/mock/getPic";
 
 function PhotoWall() {
-  let imgSrc =[]
-  for(let i = 0; i < 12; i++){
-    const randomIndex  = Math.random() * getPicMock.data.length | 0;
-    imgSrc.push(getPicMock.data.find((cItem,cIndex)=>{
-      return cIndex === randomIndex;
-    }).path)
+  ;
+  let imgSrc = [];
+  for (let i = 0; i < 12; i++) {
+    const randomIndex = (Math.random() * window.pictureConfig.data.length) | 0;
+    imgSrc.push(
+      window.pictureConfig.data.find((cItem, cIndex) => {
+        return cIndex === randomIndex;
+      }).path,
+    );
   }
-  
+
   useEffect(() => {
     operateDocClass("html", "add", "html_photoWall_extends");
     operateDocClass("body", "add", "body_photoWall_extends");

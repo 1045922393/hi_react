@@ -2,9 +2,19 @@ import "./index.css";
 import { useEffect } from "react";
 import ge1doot from "@/lib/imageTransform3D";
 import { operateDocClass } from "@/utils/dom";
+import {getPicMock} from '@/mock/getPic';
+
+
 
 function PhotoWall() {
-  const imgSrc = "https://api.isoyu.com/uploads/2015/07/mm_201.jpg";
+  let imgSrc =[]
+  for(let i = 0; i < 12; i++){
+    const randomIndex  = Math.random() * getPicMock.data.length | 0;
+    imgSrc.push(getPicMock.data.find((cItem,cIndex)=>{
+      return cIndex === randomIndex;
+    }).path)
+  }
+  
   useEffect(() => {
     operateDocClass("html", "add", "html_photoWall_extends");
     operateDocClass("body", "add", "body_photoWall_extends");
@@ -249,7 +259,7 @@ function PhotoWall() {
       imgdata: [
         // north
         {
-          img: imgSrc,
+          img: imgSrc[1],
           x: -1000,
           y: 0,
           z: 1500,
@@ -257,7 +267,7 @@ function PhotoWall() {
           nz: 1,
         },
         {
-          img: imgSrc,
+          img: imgSrc[2],
           x: 0,
           y: 0,
           z: 1500,
@@ -265,7 +275,7 @@ function PhotoWall() {
           nz: 1,
         },
         {
-          img: imgSrc,
+          img: imgSrc[3],
           x: 1000,
           y: 0,
           z: 1500,
@@ -274,7 +284,7 @@ function PhotoWall() {
         },
         // east
         {
-          img: imgSrc,
+          img: imgSrc[4],
           x: 1500,
           y: 0,
           z: 1000,
@@ -282,7 +292,7 @@ function PhotoWall() {
           nz: 0,
         },
         {
-          img: imgSrc,
+          img: imgSrc[5],
           x: 1500,
           y: 0,
           z: 0,
@@ -290,7 +300,7 @@ function PhotoWall() {
           nz: 0,
         },
         {
-          img: imgSrc,
+          img: imgSrc[6],
           x: 1500,
           y: 0,
           z: -1000,
@@ -299,7 +309,7 @@ function PhotoWall() {
         },
         // south
         {
-          img: imgSrc,
+          img: imgSrc[7],
           x: 1000,
           y: 0,
           z: -1500,
@@ -307,7 +317,7 @@ function PhotoWall() {
           nz: -1,
         },
         {
-          img: imgSrc,
+          img: imgSrc[8],
           x: 0,
           y: 0,
           z: -1500,
@@ -315,7 +325,7 @@ function PhotoWall() {
           nz: -1,
         },
         {
-          img: imgSrc,
+          img: imgSrc[9],
           x: -1000,
           y: 0,
           z: -1500,
@@ -324,7 +334,7 @@ function PhotoWall() {
         },
         // west
         {
-          img: imgSrc,
+          img: imgSrc[10],
           x: -1500,
           y: 0,
           z: -1000,
@@ -332,7 +342,7 @@ function PhotoWall() {
           nz: 0,
         },
         {
-          img: imgSrc,
+          img: imgSrc[11],
           x: -1500,
           y: 0,
           z: 0,
@@ -340,7 +350,7 @@ function PhotoWall() {
           nz: 0,
         },
         {
-          img: imgSrc,
+          img: imgSrc[0],
           x: -1500,
           y: 0,
           z: 1000,

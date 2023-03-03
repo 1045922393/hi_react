@@ -305,7 +305,7 @@ function Content() {
               <div className="card__image">
                 <img
                   className="link_img"
-                  data-contents="/"
+                  data-contents="/photoWall"
                   src="https://cdn.seovx.com/?mom=302"
                   alt=""
                 />

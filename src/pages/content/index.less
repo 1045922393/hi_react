@@ -25,7 +25,7 @@
   &.app {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,16 +104,17 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 100;
+    z-index: 100; 
+    filter: blur(1px);
   }
   .cardList__btn.btn--left {
     border: transparent 20px solid;
-    border-right-color: #161616;
+    border-right-color: #ffffee;
     left: -15%;
   }
   .cardList__btn.btn--right {
     border: transparent 20px solid;
-    border-left-color: #161616;
+    border-left-color: #ffffee;
     right: -15%;
   }
   .cardList__btn .icon {

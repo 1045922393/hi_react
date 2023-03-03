@@ -1,15 +1,16 @@
 // 目录
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { config } from "@/index";
 import { useState, useEffect } from "react";
 import "./index.less";
 function Content() {
-  console.clear();
-  console.log('Contents Component is coming');
+
+  const navigate = useNavigate();
+
   const { gsap, imagesLoaded } = window;
   useEffect(() => {
-    const bodyDoc = document.querySelector('body');
-    bodyDoc.classList.add('body_extend');
+    const bodyDoc = document.querySelector("body");
+    bodyDoc.classList.add("body_extend");
     const buttons = {
       prev: document.querySelector(".btn--left"),
       next: document.querySelector(".btn--right"),
@@ -278,17 +279,21 @@ function Content() {
 
     waitForImages();
 
-    return ()=>{
-      console.log('Content Component is going');
-      bodyDoc.classList.remove('body_extend');
-
-    }
+    return () => {
+      console.log("Content Component is going");
+      bodyDoc.classList.remove("body_extend");
+    };
   });
 
+  window.addEventListener("click", (e) => {
+    if (e.target.childNodes[0]?.childNodes[0]?.className === 'link_img' && e.target.childNodes[0]?.childNodes[0]?.dataset?.contents) {
+      navigate(`${config.homepage}${e.target.childNodes[0]?.childNodes[0]?.dataset?.contents} `)
+    }
+  });
   return (
     <>
-      <Link to={config.homepage + "/photo"}>张片</Link>
-      <Link to={config.homepage + "/picture"}>图片</Link>
+      {/* <Link to={config.homepage + "/photo"}>张片</Link>
+      <Link to={config.homepage + "/picture"}>图片</Link> */}
       <div className="app contents">
         <div className="cardList">
           <button className="cardList__btn btn btn--left">
@@ -298,19 +303,34 @@ function Content() {
           <div className="cards__wrapper">
             <div className="card current--card">
               <div className="card__image">
-                <img src="https://cdn.seovx.com/?mom=302" alt="" />
+                <img
+                  className="link_img"
+                  data-contents="/"
+                  src="https://cdn.seovx.com/?mom=302"
+                  alt=""
+                />
               </div>
             </div>
 
             <div className="card next--card">
               <div className="card__image">
-                <img src="http://api.btstu.cn/sjbz/?lx=m_meizi" alt="" />
+                <img
+                  className="link_img"
+                  data-contents="/picture"
+                  src="http://api.btstu.cn/sjbz/?lx=m_meizi"
+                  alt=""
+                />
               </div>
             </div>
 
             <div className="card previous--card">
               <div className="card__image">
-                <img src="https://api.isoyu.com/mm_images.php" alt="" />
+                <img
+                  className="link_img"
+                  data-contents="/photo"
+                  src="https://api.isoyu.com/mm_images.php"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -323,34 +343,34 @@ function Content() {
         <div className="infoList">
           <div className="info__wrapper">
             <div className="info current--info">
-              <h1 className="text name">Highlands</h1>
-              <h4 className="text location">Scotland</h4>
-              <p className="text description">The mountains are calling</p>
+              <h1 className="text name">人生若只如初见， <br/>何事秋风悲画扇。</h1>
+              <h4 className="text location">纳兰性德</h4>
+              <p className="text description">木兰词</p>
             </div>
 
             <div className="info next--info">
-              <h1 className="text name">Machu Pichu</h1>
-              <h4 className="text location">Peru</h4>
-              <p className="text description">Adventure is never far away</p>
+              <h1 className="text name">执子之手， 与子偕老。</h1>
+              <h4 className="text location">先秦</h4>
+              <p className="text description">诗经·击鼓</p>
             </div>
 
             <div className="info previous--info">
-              <h1 className="text name">Chamonix</h1>
-              <h4 className="text location">France</h4>
-              <p className="text description">Let your dreams come true</p>
+              <h1 className="text name">人面不知何处去，<br/>桃花依旧笑春风。</h1>
+              <h4 className="text location">崔护</h4>
+              <p className="text description">题都城南庄</p>
             </div>
           </div>
         </div>
 
         <div className="app__bg">
           <div className="app__bg__image current--image">
-            <img src="images/1.jpg" alt="" />
+            <img src="https://cdn.seovx.com/?mom=302" alt="" />
           </div>
           <div className="app__bg__image next--image">
-            <img src="images/2.jpg" alt="" />
+            <img src="http://api.btstu.cn/sjbz/?lx=m_meizi" alt="" />
           </div>
           <div className="app__bg__image previous--image">
-            <img src="images/3.jpg" alt="" />
+            <img src="https://api.isoyu.com/mm_images.php" alt="" />
           </div>
         </div>
 

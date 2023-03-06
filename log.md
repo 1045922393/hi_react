@@ -38,3 +38,12 @@ shell 下载img
 
 页面picture支持 p=100 筛选图片类型
 
+`变化`
+
+node下载图片 错误输出地址
+
+支持图片分类
+
+axios返回结果可进行下载保存
+
+picture和photoWall 支持入参选择图片类型

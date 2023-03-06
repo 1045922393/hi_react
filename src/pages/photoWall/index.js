@@ -2,15 +2,23 @@ import "./index.css";
 import { useEffect } from "react";
 import ge1doot from "@/lib/imageTransform3D";
 import { operateDocClass } from "@/utils/dom";
+import { useGetParams } from "@/utils/params";
 // import { getPicMock } from "@/mock/getPic";
 
 function PhotoWall() {
-  ;
+  const p = useGetParams();
+  let isNsfw = false;
+
+  let windowPicture = window.pictureConfig.data;
+  if (p && p.endsWith("1")) {
+    isNsfw = true;
+    windowPicture = window.pPictureConfig.data;
+  }
   let imgSrc = [];
   for (let i = 0; i < 12; i++) {
-    const randomIndex = (Math.random() * window.pictureConfig.data.length) | 0;
+    const randomIndex = (Math.random() * windowPicture.length) | 0;
     imgSrc.push(
-      window.pictureConfig.data.find((cItem, cIndex) => {
+      windowPicture.find((cItem, cIndex) => {
         return cIndex === randomIndex;
       }).path,
     );

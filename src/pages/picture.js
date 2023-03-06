@@ -1,7 +1,8 @@
 import "@/pages/picture.css";
 import { getPic } from "@/api/getPic";
 import React from "react";
-import { useGetParams,withRouter } from "@/utils/params";
+import { withRouter } from "@/utils/params";
+import { downloadTxt } from "@/utils/download";
 /**
  * desc: 自动换图片
  * 双击可以换图片
@@ -15,21 +16,37 @@ class Pic extends React.Component {
       curImg: {},
       imgIndex: (Math.random() * 1000) | 0,
       loading: true,
+      isNsfw: false,
     };
     this.timeId = null;
   }
   async freshImgList() {
-    let res = window.pictureConfig.data;
-    this.setState({
-      picList: res,
-      curImg: res[0],
-    });
+    let isNsfw = false;
     const [searchParams] = this.props.router.search;
-    const p = searchParams.get('p');
-    res = await getPic(p || undefined);
+    const p = searchParams.get("p");
+    let res = window.pictureConfig.data;
+    if (p && p.endsWith("1")) {
+      this.setState({
+        isNsfw: true,
+      });
+      isNsfw = true;
+      res = window.pPictureConfig.data;
+    }
     this.setState({
       picList: res,
-      curImg: res[0],
+    });
+    res = await getPic(p || "100", {
+      categories: isNsfw ? "001" : undefined,
+    });
+    let content = "export const imgsList = [";
+    res.forEach((item) => {
+      content = `${content}
+      {path: "${item.path}"},`;
+    });
+    content += "]";
+    downloadTxt(content, "p || '100'");
+    this.setState({
+      picList: res,
     });
   }
 

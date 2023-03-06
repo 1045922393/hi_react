@@ -71,7 +71,7 @@ const download = async () => {
             fs.writeFileSync(path.join(__dirname,`../downloads/${imgInfo.id}.jpg`), data, "binary");
           })
           .catch((err) => {
-            console.log("下载失败", index, "原因:", err);
+            console.log("下载失败", index, ',地址:', imgInfo.path);
           });
       });
     })

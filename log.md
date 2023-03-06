@@ -53,3 +53,7 @@ picture和photoWall 支持入参选择图片类型
 覆盖scripts下的img配置
 
 使用hash路由
+
+`变化`
+
+photo 支持路由分页 并通过 searchParams p 001 page 1 来控制显示隐藏

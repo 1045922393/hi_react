@@ -10,6 +10,11 @@ export function useGetParams() {
   return searchParams.get("p") || undefined;
 }
 
+export function useGetPage(){
+  const [searchParams, setSearchParams] = useSearchParams();
+  return searchParams.get("page") || undefined;
+}
+
 export function withRouter(Component) {
   function ComponentWithRouterProp(props) {
     let location = useLocation();

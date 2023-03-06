@@ -1,0 +1,6 @@
+.page_photo img {
+  max-width: 100%;
+}
+.page_photo .btn {
+  max-width: 250px;
+}

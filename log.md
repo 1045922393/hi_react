@@ -47,3 +47,9 @@ node下载图片 错误输出地址
 axios返回结果可进行下载保存
 
 picture和photoWall 支持入参选择图片类型
+
+`变化`
+
+覆盖scripts下的img配置
+
+使用hash路由

@@ -63,7 +63,7 @@
     "start": "pnpm imgCopy && node scripts/start.js",
     "build": "pnpm imgCopy && node scripts/build.js",
     "test": "node scripts/test.js",
-    "imgCopy": "node scripts/imgsCopy.js",
+    "imgCopy": "node scripts/imgCopy.js",
     "downImg": "node node/downloadImg.js"
   },
   "eslintConfig": {

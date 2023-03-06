@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 
 // import Picture from "@/pages/picture";
 // import Pho from "@/pages/photos";
@@ -14,12 +14,12 @@ const Content = React.lazy(() => import("@/pages/content/index"));
 const PhotoWall = React.lazy(()=> import("@/pages/photoWall/index"));
 
 const config = {
-  homepage: "/picture",
+  homepage: "",
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <Suspense fallback={<div></div>}>
       <Routes>
         <Route path={config.homepage + "/"} element={<Content />}></Route>
@@ -32,7 +32,7 @@ root.render(
         <Route path={config.homepage + "/*"} element={<Picture />}></Route>
       </Routes>
     </Suspense>
-  </BrowserRouter>,
+  </HashRouter>,
 );
 
 export { config };

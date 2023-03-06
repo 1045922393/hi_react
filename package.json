@@ -60,9 +60,11 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "imgCopy && node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "imgCopy": "node scripts/imgsCopy.js",
+    "downImg": "node node/downloadImg.js"
   },
   "eslintConfig": {
     "extends": [

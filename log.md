@@ -25,3 +25,16 @@
 `变化`
 
 在public中更该img.js来换图片
+
+`变化`
+
+node 自动整合imgPath
+
+node 下载img
+
+shell 下载img
+
+类组件添加router属性在props
+
+页面picture支持 p=100 筛选图片类型
+

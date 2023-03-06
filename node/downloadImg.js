@@ -1,11 +1,12 @@
-import axios from "axios";
+const axios = require("axios");
+const fs = require("fs"); //引入文件读取模块
+const path = require("path");
 
 let time = 0;
-function random(maxNum){
-  return Math.random() * (maxNum + 1)  | 0;
+function random(maxNum) {
+  return (Math.random() * (maxNum + 1)) | 0;
 }
-
-export const apiEnums = {
+const apiEnums = {
   purity: {
     0: "100", //"正常"
     1: "010", //"开放"
@@ -29,18 +30,14 @@ export const apiEnums = {
     2: "3840x2160",
   },
 };
-const isDev = process.env.NODE_ENV === "development"; // development|production
-const baseUrl = isDev ? "/wallhaven" : "https://wallhaven.cc";
-// api: https://wallhaven.cc/api/v1/search?apikey=cbSjyOZcDBn5jitF2AwLg8vnueiPa9zo&purity=${purity}&categories=${categories}&sorting=${sorting}&atleast=${atleast}
-
 const defaultVal = {
   purity: apiEnums.purity[random(2)],
   categories: apiEnums.categories[random(2)],
   sorting: apiEnums.sorting[random(4)],
   atleast: apiEnums.atleast[random(2)],
-}
+};
 
-export const getPic = async (
+const getPic = async (
   purity = defaultVal.purity,
   options = {
     categories: defaultVal.categories,
@@ -55,9 +52,31 @@ export const getPic = async (
     atleast = defaultVal.atleast,
   } = options;
   let api =
-    baseUrl +
+    "https://wallhaven.cc" +
     `/api/v1/search?apikey=cbSjyOZcDBn5jitF2AwLg8vnueiPa9zo&purity=${purity}&categories=${categories}&sorting=${sorting}&atleast=${atleast}`;
+  console.log("Debugger ~ file: downloadImg.js:54 ~ api:", api);
   const res = await axios.get(api);
   console.log(`>>>>>>getPic|${api}| request times is>>>>>`, ++time);
   return res.data.data;
 };
+
+const download = async () => {
+  getPic()
+    .then((res) => {
+      console.log("getPic finfish");
+      res.forEach((imgInfo, index) => {
+        axios({ url: imgInfo.path, responseType: "arraybuffer" })
+          .then(({ data }) => {
+            console.log("开始下载", index);
+            fs.writeFileSync(path.join(__dirname,`../downloads/${imgInfo.id}.jpg`), data, "binary");
+          })
+          .catch((err) => {
+            console.log("下载失败", index, "原因:", err);
+          });
+      });
+    })
+    .catch((err) => {
+      console.log("获取pic链接错误", err);
+    });
+};
+download();

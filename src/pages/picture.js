@@ -1,10 +1,11 @@
 import "@/pages/picture.css";
 import { getPic } from "@/api/getPic";
 import React from "react";
+import { useGetParams,withRouter } from "@/utils/params";
 /**
  * desc: 自动换图片
  * 双击可以换图片
- */ 
+ */
 
 class Pic extends React.Component {
   constructor() {
@@ -15,7 +16,7 @@ class Pic extends React.Component {
       imgIndex: (Math.random() * 1000) | 0,
       loading: true,
     };
-    this.timeId = null
+    this.timeId = null;
   }
   async freshImgList() {
     let res = window.pictureConfig.data;
@@ -23,12 +24,13 @@ class Pic extends React.Component {
       picList: res,
       curImg: res[0],
     });
-    res = await getPic();
+    const [searchParams] = this.props.router.search;
+    const p = searchParams.get('p');
+    res = await getPic(p || undefined);
     this.setState({
       picList: res,
       curImg: res[0],
     });
-    
   }
 
   nextImg() {
@@ -49,7 +51,6 @@ class Pic extends React.Component {
   }
 
   async componentDidMount() {
-    console.log(this.props)
     this.freshImgList();
   }
   imgError = () => {
@@ -63,10 +64,10 @@ class Pic extends React.Component {
       this.nextImg();
     }, 25000);
   };
-  imgClick =()=>{
+  imgClick = () => {
     clearTimeout(this.timeId);
     this.imgError();
-  }
+  };
   render() {
     const { imgIndex, picList, loading } = this.state;
     return (
@@ -98,4 +99,4 @@ class Pic extends React.Component {
   }
 }
 
-export default Pic;
+export default withRouter(Pic);

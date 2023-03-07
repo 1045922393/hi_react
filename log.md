@@ -57,3 +57,7 @@ picture和photoWall 支持入参选择图片类型
 `变化`
 
 photo 支持路由分页 并通过 searchParams p 001 page 1 来控制显示隐藏
+
+`变化`
+
+downloadImg支持传参数 pur cate

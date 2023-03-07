@@ -2,6 +2,12 @@ const axios = require("axios");
 const fs = require("fs"); //引入文件读取模块
 const path = require("path");
 
+const validate = (reg = new RegExp(/^[01]{3}$/));
+
+// script options
+const purityOption = process.env.npm_config_pur;
+const categoriesOption = process.env.npm_config_cate;
+
 let time = 0;
 function random(maxNum) {
   return (Math.random() * (maxNum + 1)) | 0;
@@ -61,17 +67,30 @@ const getPic = async (
 };
 
 const download = async () => {
-  getPic()
+  const purity =
+    purityOption && validate.test(purityOption)
+      ? purityOption
+      : defaultVal.purity;
+  const categories =
+    purityOption && validate.test(categoriesOption)
+      ? categoriesOption
+      : defaultVal.categories;
+
+  getPic(purity, { categories })
     .then((res) => {
       console.log("getPic finfish");
       res.forEach((imgInfo, index) => {
         axios({ url: imgInfo.path, responseType: "arraybuffer" })
           .then(({ data }) => {
             console.log("开始下载", index);
-            fs.writeFileSync(path.join(__dirname,`../downloads/${imgInfo.id}.jpg`), data, "binary");
+            fs.writeFileSync(
+              path.join(__dirname, `../downloads/${imgInfo.id}.jpg`),
+              data,
+              "binary",
+            );
           })
           .catch((err) => {
-            console.log("下载失败", index, ',地址:', imgInfo.path);
+            console.log("下载失败", index, ",地址:", imgInfo.path);
           });
       });
     })

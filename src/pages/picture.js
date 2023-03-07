@@ -44,7 +44,7 @@ class Pic extends React.Component {
       {path: "${item.path}"},`;
     });
     content += "]";
-    downloadTxt(content, "p || '100'");
+    downloadTxt(content, "p100c");
     this.setState({
       picList: res,
     });

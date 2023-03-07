@@ -69,3 +69,12 @@ webpack 支持less javascriptEnabled
 美化photos页面 壁纸画廊
 
 路由参数p正则校验
+
+`变化`
+
+package.json script newPage
+
+AlbumWall 新页面
+
+backBtn 抽离
+

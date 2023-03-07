@@ -12,6 +12,7 @@ const Picture = React.lazy(() => import("@/pages/picture"));
 const Pho = React.lazy(() => import("@/pages/photos"));
 const Content = React.lazy(() => import("@/pages/content/index"));
 const PhotoWall = React.lazy(()=> import("@/pages/photoWall/index"));
+const AlbumWall = React.lazy(()=> import("@/pages/albumWall/index"));
 
 const config = {
   homepage: "",
@@ -29,6 +30,7 @@ root.render(
           element={<Picture />}
         ></Route>
         <Route path={config.homepage + "/photoWall"} element={<PhotoWall></PhotoWall>}></Route>
+        <Route path={config.homepage + "/albumWall"} element={<AlbumWall />}></Route>
         <Route path={config.homepage + "/*"} element={<Picture />}></Route>
       </Routes>
     </Suspense>

@@ -3,10 +3,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useGetParams, useGetPage } from "@/utils/params";
 import { useSearchParams } from "react-router-dom";
 import { validatePurity } from "@/utils/validate";
-import { Link, useNavigate } from "react-router-dom";
+import BackBtn from "@/components/back";
 
 function Pho() {
-  const navigate = useNavigate();
   const [showImg, setShowImg] = useState(0);
 
   const [picList, setPicList] = useState([]);
@@ -89,11 +88,6 @@ function Pho() {
     }, 500);
   };
 
-  const handleBackHome = () => {
-    console.log("?");
-    navigate("/");
-  };
-
   return (
     <div className="page_photo">
       {(() => {
@@ -105,9 +99,7 @@ function Pho() {
             </div>
           );
       })()}
-      <div className="back_btn" onClick={handleBackHome}>
-        B
-      </div>
+      <BackBtn></BackBtn>
       <div className="img_box">
         <div
           className="img_contain"

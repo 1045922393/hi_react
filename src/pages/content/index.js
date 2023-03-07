@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { config } from "@/index";
 import { useState, useEffect } from "react";
 import "./index.less";
+import BackBtn from "@/components/back";
 function Content() {
 
   const navigate = useNavigate();
@@ -295,6 +296,7 @@ function Content() {
       {/* <Link to={config.homepage + "/photo"}>张片</Link>
       <Link to={config.homepage + "/picture"}>图片</Link> */}
       <div className="app contents">
+        <BackBtn text="M" path="/albumWall"></BackBtn>
         <div className="cardList">
           <button className="cardList__btn btn btn--left">
             <div className="icon"></div>

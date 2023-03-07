@@ -3,6 +3,7 @@ import { getPic } from "@/api/getPic";
 import React from "react";
 import { withRouter } from "@/utils/params";
 import { downloadTxt } from "@/utils/download";
+import BackBtn from "@/components/back";
 /**
  * desc: 自动换图片
  * 双击可以换图片
@@ -89,6 +90,7 @@ class Pic extends React.Component {
     const { imgIndex, picList, loading } = this.state;
     return (
       <div className="App">
+        <BackBtn></BackBtn>
         <header className="App-header">
           {picList.length !== 0 ? (
             <img

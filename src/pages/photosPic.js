@@ -57,7 +57,7 @@ function Pho() {
       fn();
       setTimeout(() => {
         setSwitcher(true);
-      }, 1000);
+      }, 2000);
     }, 1000);
   }
 
@@ -120,9 +120,42 @@ function Pho() {
           );
       })()}
       <BackBtn></BackBtn>
-      <div className="page_control">
-        <div className="page_btn" onClick={handlePrePage}>PREVIOUS</div>
-        <div className="page_btn" onClick={handleNextPage}>NEXT</div>
+      <div className="img_box">
+        <div
+          className="img_contain"
+          onDoubleClick={handleOpenImg}
+          onClick={handleChangeBg.bind(
+            this,
+            "https://api.isoyu.com/mm_images.php",
+          )}
+        >
+          <img
+            className="btn"
+            src="https://api.isoyu.com/mm_images.php"
+            alt=""
+          />
+        </div>
+        <div
+          className="img_contain"
+          onDoubleClick={handlePrePage}
+          onClick={handleChangeBg.bind(
+            this,
+            "http://api.btstu.cn/sjbz/?lx=m_meizi",
+          )}
+        >
+          <img
+            className="btn"
+            src="http://api.btstu.cn/sjbz/?lx=m_meizi"
+            alt=""
+          />
+        </div>
+        <div
+          className="img_contain"
+          onDoubleClick={handleNextPage}
+          onClick={handleChangeBg.bind(this, "https://cdn.seovx.com/?mom=302")}
+        >
+          <img className="btn" src="https://cdn.seovx.com/?mom=302" alt="" />
+        </div>
       </div>
       <div className="bg"></div>
       <div className={switcher ? "imgList" : "imgList hidden"}>

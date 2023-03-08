@@ -1,0 +1,30 @@
+
+.message_page{
+  .typing {
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .typing-effect {
+    width: 22ch;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 0.1875rem solid;
+    font-family: monospace;
+    font-size: 2em;
+    animation: typing 10s steps(22), effect 0.5s step-end infinite alternate;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+  }
+
+  @keyframes effect {
+    50% {
+      border-color: transparent;
+    }
+  }
+}

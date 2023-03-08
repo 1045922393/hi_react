@@ -8,8 +8,8 @@ import { useGetParams } from "@/utils/params";
 function Album3d() {
   const [searchParams] = useSearchParams();
   
-  const sourceNum = Number(searchParams.get('x') || 4);
-  const shapeImgs = Number(searchParams.get('y') || 200);
+  const sourceNum = Number(searchParams.get('x') || 8);
+  const shapeImgs = Number(searchParams.get('y') || 240);
   const publicUrl = process.env.PUBLIC_URL;
   const p = useGetParams();
   let picSrc = p && p === '001' ? window.pPictureConfig.data : window.pictureConfig.data;

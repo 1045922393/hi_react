@@ -5,8 +5,9 @@ import { useState, useEffect } from "react";
 import "./index.less";
 import BackBtn from "@/components/back";
 function Content() {
-
   const navigate = useNavigate();
+
+  const [totalDay, setTotalDay] = useState(0);
 
   const { gsap, imagesLoaded } = window;
   useEffect(() => {
@@ -286,9 +287,21 @@ function Content() {
     };
   });
 
+  useEffect(() => {
+    const start_date = new Date("2022-05-14 00:00:00");
+    const end_date = new Date();
+    const days = Math.ceil((end_date - start_date) / 86400000);
+    setTotalDay(days);
+  });
+
   window.addEventListener("click", (e) => {
-    if (e.target.childNodes[0]?.childNodes[0]?.className === 'link_img' && e.target.childNodes[0]?.childNodes[0]?.dataset?.contents) {
-      navigate(`${config.homepage}${e.target.childNodes[0]?.childNodes[0]?.dataset?.contents} `)
+    if (
+      e.target.childNodes[0]?.childNodes[0]?.className === "link_img" &&
+      e.target.childNodes[0]?.childNodes[0]?.dataset?.contents
+    ) {
+      navigate(
+        `${config.homepage}${e.target.childNodes[0]?.childNodes[0]?.dataset?.contents} `,
+      );
     }
   });
   return (
@@ -296,8 +309,21 @@ function Content() {
       {/* <Link to={config.homepage + "/photo"}>张片</Link>
       <Link to={config.homepage + "/picture"}>图片</Link> */}
       <div className="app contents">
-        <BackBtn text="D" path="/album3d" style={{right:50+'px'}}></BackBtn>
-        <BackBtn text="A" path="/albumWall" ></BackBtn>
+        <BackBtn
+          text={(totalDay + "").substring(0, 1)}
+          path="/album3d"
+          style={{ right: 150 + "px" }}
+        ></BackBtn>
+        <BackBtn
+          text={(totalDay + "").substring(1, 2)}
+          path="/albumWall"
+          style={{ right: 100 + "px" }}
+        ></BackBtn>
+        <BackBtn
+          text={(totalDay + "").substring(2, 3)}
+          style={{ right: 50 + "px" }}
+          path="/message"
+        ></BackBtn>
         <div className="cardList">
           <button className="cardList__btn btn btn--left">
             <div className="icon"></div>
@@ -306,21 +332,35 @@ function Content() {
           <div className="cards__wrapper">
             <div className="card current--card">
               <div className="card__image">
-                <img
+                {/* <img
                   className="link_img"
                   data-contents="/photoWall"
                   src="https://cdn.seovx.com/?mom=302"
+                  alt=""
+                /> */}
+                <img
+                  className="link_img"
+                  data-contents="/photoWall"
+                  src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/10.jpeg"
                   alt=""
                 />
               </div>
             </div>
 
             <div className="card next--card">
-              <div className="card__image">
+              {/* <div className="card__image">
                 <img
                   className="link_img"
                   data-contents="/picture"
                   src="http://api.btstu.cn/sjbz/?lx=m_meizi"
+                  alt=""
+                />
+              </div> */}
+              <div className="card__image">
+                <img
+                  className="link_img"
+                  data-contents="/picture"
+                  src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/40.jpeg"
                   alt=""
                 />
               </div>
@@ -328,10 +368,16 @@ function Content() {
 
             <div className="card previous--card">
               <div className="card__image">
+                {/* <img
+                  className="link_img"
+                  data-contents="/photo?p=100&page=1"
+                  src="https://api.isoyu.com/mm_images.php"
+                  alt=""
+                /> */}
                 <img
                   className="link_img"
-                  data-contents="/photo"
-                  src="https://api.isoyu.com/mm_images.php"
+                  data-contents="/photo?p=100&page=1"
+                  src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/33.jpeg"
                   alt=""
                 />
               </div>
@@ -346,34 +392,57 @@ function Content() {
         <div className="infoList">
           <div className="info__wrapper">
             <div className="info current--info">
-              <h1 className="text name">人生若只如初见， <br/>何事秋风悲画扇。</h1>
-              <h4 className="text location">纳兰性德</h4>
-              <p className="text description">木兰词</p>
+              <h1 className="text name">
+                2022年05月14日 <br />
+                我们在一起啦
+              </h1>
+              <h4 className="text location">梁晓怡 With 胡伟烨</h4>
+              <p className="text description">😁😁😁</p>
             </div>
 
             <div className="info next--info">
-              <h1 className="text name">执子之手， 与子偕老。</h1>
-              <h4 className="text location">先秦</h4>
-              <p className="text description">诗经·击鼓</p>
+              <h1 className="text name">
+                今天是我们在一起的
+                <br />
+                第{totalDay}天啦
+              </h1>
+              <h4 className="text location">大臭娃!</h4>
+              <p className="text description">你别再记错啦!!!</p>
             </div>
 
             <div className="info previous--info">
-              <h1 className="text name">人面不知何处去，<br/>桃花依旧笑春风。</h1>
-              <h4 className="text location">崔护</h4>
-              <p className="text description">题都城南庄</p>
+              <h1 className="text name">
+                让我们回顾下
+                <br />
+                我们走过的日子吧
+              </h1>
+              <h4 className="text location">准备好了吗</h4>
+              <p className="text description">PS:很多隐藏功能需要自己摸索噢</p>
             </div>
           </div>
         </div>
 
         <div className="app__bg">
           <div className="app__bg__image current--image">
-            <img src="https://cdn.seovx.com/?mom=302" alt="" />
+            {/* <img src="https://cdn.seovx.com/?mom=302" alt="" /> */}
+            <img
+              src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/10.jpeg"
+              alt=""
+            />
           </div>
           <div className="app__bg__image next--image">
-            <img src="http://api.btstu.cn/sjbz/?lx=m_meizi" alt="" />
+            <img
+              src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/40.jpeg"
+              alt=""
+            />
+            {/* <img src="http://api.btstu.cn/sjbz/?lx=m_meizi" alt="" /> */}
           </div>
           <div className="app__bg__image previous--image">
-            <img src="https://api.isoyu.com/mm_images.php" alt="" />
+            <img
+              src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/33.jpeg"
+              alt=""
+            />
+            {/* <img src="https://api.isoyu.com/mm_images.php" alt="" /> */}
           </div>
         </div>
 

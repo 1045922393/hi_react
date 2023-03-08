@@ -6,13 +6,16 @@ import { validatePurity } from "@/utils/validate";
 import BackBtn from "@/components/back";
 
 function Pho() {
+  const perPage = 5;
   const [showImg, setShowImg] = useState(0);
 
   const [picList, setPicList] = useState([]);
 
+  const [switcher, setSwitcher] = useState(false);
+
   // 计算属性
   const maxPage = useMemo(() => {
-    return Math.ceil(picList.length / 10);
+    return Math.ceil(picList.length / perPage);
   }, [picList]);
 
   const page = useGetPage();
@@ -20,17 +23,17 @@ function Pho() {
   const curNum = useMemo(() => {
     return (
       picList.filter((item, index) => {
-        return index >= (page - 1) * 10 && index < page * 10;
+        return index >= (page - 1) * perPage && index < page * perPage;
       }).length || 0
     );
   }, [picList, page]);
 
   const startNum = useMemo(() => {
-    return (page - 1) * 10 + 1;
+    return (page - 1) * perPage + 1;
   }, [page]);
 
   const endNum = useMemo(() => {
-    return Math.min(page * 10, picList.length);
+    return Math.min(page * perPage, picList.length);
   }, [picList, page]);
 
   const [getSearchParams, setSearchParams] = useSearchParams();
@@ -39,36 +42,53 @@ function Pho() {
     if (validatePurity(p) && p.endsWith("1")) {
       setPicList([...window.pPictureConfig.data]);
       setShowImg(6);
+      setSwitcher(true);
     }
     if (validatePurity(p) && p.startsWith("1")) {
       setPicList([...window.pictureConfig.data]);
       setShowImg(6);
+      setSwitcher(true);
     }
   }, [showImg]);
 
+  function handleSwitcher(fn) {
+    setSwitcher(false);
+    setTimeout(() => {
+      fn();
+      setTimeout(() => {
+        setSwitcher(true);
+      }, 2000);
+    }, 1000);
+  }
+
   const handlePrePage = () => {
-    console.log("handlePrePage");
+    // console.log("handlePrePage");
     if (!page || Number(page) === 1) return;
-    setSearchParams({
-      page: Number(page) - 1,
-      p: p || "",
+    handleSwitcher(()=>{
+      setSearchParams({
+        page: Number(page) - 1,
+        p: p || "",
+      });
     });
   };
 
   const handleNextPage = () => {
-    console.log("handleNextPage");
+    // console.log("handleNextPage");
     if (!page || page >= maxPage) return;
-    setSearchParams({
-      page: Number(page) + 1,
-      p: p || "",
+    handleSwitcher(()=>{
+      setSearchParams({
+        page: Number(page) + 1,
+        p: p || "",
+      });
     });
   };
 
   const handleOpenImg = () => {
-    console.log("handleOpenImg");
-    if (showImg > 5) return;
+    // console.log("handleOpenImg");
+    if (showImg > 5) return setSwitcher(true);
 
     if (showImg === 5) {
+      setSwitcher(true);
       setSearchParams({
         page: 1,
         p: "100",
@@ -81,10 +101,10 @@ function Pho() {
     const bg = document.querySelector(".page_photo .bg");
 
     if (bg.style.backgroundImage === `url("${urlPath}")`) return;
-    bg.style.backgroundSize = `10%`;
+    // bg.style.backgroundSize = `10%`;
     setTimeout(() => {
       bg.style.backgroundImage = `url("${urlPath}")`;
-      bg.style.backgroundSize = `100%`;
+      // bg.style.backgroundSize = `100%`;
     }, 500);
   };
 
@@ -103,7 +123,7 @@ function Pho() {
       <div className="img_box">
         <div
           className="img_contain"
-          onDoubleClick={handlePrePage}
+          onDoubleClick={handleOpenImg}
           onClick={handleChangeBg.bind(
             this,
             "https://api.isoyu.com/mm_images.php",
@@ -117,7 +137,7 @@ function Pho() {
         </div>
         <div
           className="img_contain"
-          onDoubleClick={handleOpenImg}
+          onDoubleClick={handlePrePage}
           onClick={handleChangeBg.bind(
             this,
             "http://api.btstu.cn/sjbz/?lx=m_meizi",
@@ -138,10 +158,10 @@ function Pho() {
         </div>
       </div>
       <div className="bg"></div>
-      <div className="imgList">
+      <div className={switcher ? "imgList" : "imgList hidden"}>
         {picList
           .filter((item, index) => {
-            return index >= (page - 1) * 10 && index < page * 10;
+            return index >= (page - 1) * perPage && index < page * perPage;
           })
           .map((item) => {
             return (

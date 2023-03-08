@@ -60,7 +60,7 @@
     "workbox-webpack-plugin": "^6.4.1"
   },
   "scripts": {
-    "start": "pnpm imgCopy && node scripts/start.js",
+    "dev": "pnpm imgCopy && node scripts/start.js",
     "build": "pnpm imgCopy && node scripts/build.js",
     "test": "node scripts/test.js",
     "imgCopy": "node scripts/imgCopy.js",

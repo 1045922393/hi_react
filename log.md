@@ -78,3 +78,6 @@ AlbumWall 新页面
 
 backBtn 抽离
 
+`变化`
+
+优化photo体验

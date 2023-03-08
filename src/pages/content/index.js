@@ -296,7 +296,8 @@ function Content() {
       {/* <Link to={config.homepage + "/photo"}>张片</Link>
       <Link to={config.homepage + "/picture"}>图片</Link> */}
       <div className="app contents">
-        <BackBtn text="M" path="/albumWall"></BackBtn>
+        <BackBtn text="D" path="/album3d" style={{right:50+'px'}}></BackBtn>
+        <BackBtn text="A" path="/albumWall" ></BackBtn>
         <div className="cardList">
           <button className="cardList__btn btn btn--left">
             <div className="icon"></div>

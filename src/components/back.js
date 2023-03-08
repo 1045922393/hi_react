@@ -6,8 +6,8 @@ function BackBtn(props) {
     navigate(props.path || "/");
   };
   return (
-    <div className="back_btn" onClick={handleBackHome}>
-      {props.text || 'B'}
+    <div className="back_btn" style={props.style} onClick={handleBackHome}>
+      {props.text || "B"}
     </div>
   );
 }

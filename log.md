@@ -85,3 +85,9 @@ backBtn 抽离
 `变化`
 
 减少img渲染张数 优化albumWall体验
+
+`变化`
+
+3DAlbum 页面
+
+utils/dom loadJs 支持

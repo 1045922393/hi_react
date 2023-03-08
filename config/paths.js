@@ -21,7 +21,7 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const buildPath = process.env.BUILD_PATH || 'picture';
+const buildPath = process.env.BUILD_PATH || 'lxy';
 
 const moduleFileExtensions = [
   'web.mjs',

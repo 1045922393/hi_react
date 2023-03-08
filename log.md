@@ -81,3 +81,7 @@ backBtn 抽离
 `变化`
 
 优化photo体验
+
+`变化`
+
+减少img渲染张数 优化albumWall体验

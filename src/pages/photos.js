@@ -7,7 +7,6 @@ import BackBtn from "@/components/back";
 
 function Pho() {
   const perPage = 5;
-  const [showImg, setShowImg] = useState(0);
 
   const [picList, setPicList] = useState([]);
 
@@ -37,19 +36,26 @@ function Pho() {
   }, [picList, page]);
 
   const [getSearchParams, setSearchParams] = useSearchParams();
-  const p = useGetParams();
-  useEffect(() => {
-    if (validatePurity(p) && p.endsWith("1")) {
+  function initMounted() {
+    if (validatePurity(p) && p.endsWith("1") && page) {
       setPicList([...window.pPictureConfig.data]);
-      setShowImg(6);
       setSwitcher(true);
+      return;
     }
-    if (validatePurity(p) && p.startsWith("1")) {
-      setPicList([...window.pictureConfig.data]);
-      setShowImg(6);
-      setSwitcher(true);
+    if(!p || !page) {
+      handleOpenImg();
     }
-  }, [showImg]);
+    setPicList([...window.pictureConfig.data]);
+  }
+  const p = useGetParams();
+
+  useEffect(() => {
+    initMounted();
+  }, []);
+
+  useEffect(() => {
+    handleChangeBg(picList[0]?.path);
+  }, [picList]);
 
   function handleSwitcher(fn) {
     setSwitcher(false);
@@ -58,13 +64,13 @@ function Pho() {
       setTimeout(() => {
         setSwitcher(true);
       }, 2000);
-    }, 1000);
+    }, 500);
   }
 
   const handlePrePage = () => {
     // console.log("handlePrePage");
     if (!page || Number(page) === 1) return;
-    handleSwitcher(()=>{
+    handleSwitcher(() => {
       setSearchParams({
         page: Number(page) - 1,
         p: p || "",
@@ -75,7 +81,7 @@ function Pho() {
   const handleNextPage = () => {
     // console.log("handleNextPage");
     if (!page || page >= maxPage) return;
-    handleSwitcher(()=>{
+    handleSwitcher(() => {
       setSearchParams({
         page: Number(page) + 1,
         p: p || "",
@@ -84,27 +90,20 @@ function Pho() {
   };
 
   const handleOpenImg = () => {
-    // console.log("handleOpenImg");
-    if (showImg > 5) return setSwitcher(true);
-
-    if (showImg === 5) {
-      setSwitcher(true);
-      setSearchParams({
-        page: 1,
-        p: "100",
-      });
-    }
-    setShowImg(showImg + 1);
-  };
+    handleSwitcher(()=>{
+    setSearchParams({
+      page: 1,
+      p: "100",
+    });
+  })
+};
 
   const handleChangeBg = (urlPath) => {
     const bg = document.querySelector(".page_photo .bg");
 
     if (bg.style.backgroundImage === `url("${urlPath}")`) return;
-    // bg.style.backgroundSize = `10%`;
     setTimeout(() => {
       bg.style.backgroundImage = `url("${urlPath}")`;
-      // bg.style.backgroundSize = `100%`;
     }, 500);
   };
 
@@ -123,38 +122,17 @@ function Pho() {
       <div className="img_box">
         <div
           className="img_contain"
-          onDoubleClick={handleOpenImg}
-          onClick={handleChangeBg.bind(
-            this,
-            "https://api.isoyu.com/mm_images.php",
-          )}
+          onClick={handlePrePage}
+          onDoubleClick={handleChangeBg.bind(this, picList[1]?.path)}
         >
-          <img
-            className="btn"
-            src="https://api.isoyu.com/mm_images.php"
-            alt=""
-          />
+          <img className="btn" src={picList[1]?.path} alt="" />
         </div>
         <div
           className="img_contain"
-          onDoubleClick={handlePrePage}
-          onClick={handleChangeBg.bind(
-            this,
-            "http://api.btstu.cn/sjbz/?lx=m_meizi",
-          )}
+          onClick={handleNextPage}
+          onDoubleClick={handleChangeBg.bind(this, picList[0]?.path)}
         >
-          <img
-            className="btn"
-            src="http://api.btstu.cn/sjbz/?lx=m_meizi"
-            alt=""
-          />
-        </div>
-        <div
-          className="img_contain"
-          onDoubleClick={handleNextPage}
-          onClick={handleChangeBg.bind(this, "https://cdn.seovx.com/?mom=302")}
-        >
-          <img className="btn" src="https://cdn.seovx.com/?mom=302" alt="" />
+          <img className="btn" src={picList[0]?.path} alt="" />
         </div>
       </div>
       <div className="bg"></div>

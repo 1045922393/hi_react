@@ -7,6 +7,18 @@ function writeUpdateFile(file, content) {
   fs.writeFileSync(file, content);
 }
 
+function shuffle(arr) {
+  let len = arr.length;
+  for (let i = 3; i < len - 3; i++) {
+      let index = parseInt((Math.random() * (len - 3 - i)) + 3);
+      let temp = arr[index];
+      arr[index] = arr[len - i - 1];
+      arr[len - i - 1] = temp;
+  }
+  return arr;
+}
+
+
 const files = (isNsfw)=> [
   // public>config
   {
@@ -47,7 +59,7 @@ function run(isNsfw = false) {
         return item.path;
       },
     );
-    pathList = Array.from(new Set(pathList));
+    pathList = shuffle(Array.from(new Set(pathList)));
     let content = fileItem.header;
     pathList.forEach((item) => {
       content += `{ path: "${item}" },

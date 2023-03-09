@@ -8,8 +8,11 @@ function Content() {
 
   const navigate = useNavigate();
 
+  const [picList,setPicList] = useState([])
+
   const { gsap, imagesLoaded } = window;
   useEffect(() => {
+    setPicList(window.pictureConfig.data)
     const bodyDoc = document.querySelector("body");
     bodyDoc.classList.add("body_extend");
     const buttons = {
@@ -309,7 +312,7 @@ function Content() {
                 <img
                   className="link_img"
                   data-contents="/photoWall"
-                  src="https://cdn.seovx.com/?mom=302"
+                  src={picList[0]?.path}
                   alt=""
                 />
               </div>
@@ -320,7 +323,7 @@ function Content() {
                 <img
                   className="link_img"
                   data-contents="/picture"
-                  src="http://api.btstu.cn/sjbz/?lx=m_meizi"
+                  src={picList[1]?.path}
                   alt=""
                 />
               </div>
@@ -331,7 +334,7 @@ function Content() {
                 <img
                   className="link_img"
                   data-contents="/photo"
-                  src="https://api.isoyu.com/mm_images.php"
+                  src={picList[2]?.path}
                   alt=""
                 />
               </div>
@@ -367,13 +370,13 @@ function Content() {
 
         <div className="app__bg">
           <div className="app__bg__image current--image">
-            <img src="https://cdn.seovx.com/?mom=302" alt="" />
+            <img src={picList[0]?.path} alt="" />
           </div>
           <div className="app__bg__image next--image">
-            <img src="http://api.btstu.cn/sjbz/?lx=m_meizi" alt="" />
+            <img src={picList[1]?.path} alt="" />
           </div>
           <div className="app__bg__image previous--image">
-            <img src="https://api.isoyu.com/mm_images.php" alt="" />
+            <img src={picList[2]?.path} alt="" />
           </div>
         </div>
 

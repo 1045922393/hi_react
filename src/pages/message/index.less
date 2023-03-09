@@ -1,30 +1,40 @@
 
+
 .message_page{
   .typing {
     height: 80vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
+  @wordLength: 8;
+  @persistTime: 3;
   .typing-effect {
-    width: 22ch;
+    width: 0em;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 0.1875rem solid;
+    border-right: 0.1875rem transparent;
     font-family: monospace;
     font-size: 2em;
-    animation: typing 10s steps(22), effect 0.5s step-end infinite alternate;
+    animation: typing @persistTime*1s steps(@wordLength) forwards;
+    each(range(10),{
+      &:nth-child(@{value}){
+        animation-delay: ((@value - 1 )* @persistTime) + 1s;
+        transform: translateX((@value - 8) * 20px);
+      }
+    })
+    &:last-child{
+      text-align: right;
+    }
   }
 
   @keyframes typing {
     from {
       width: 0;
     }
-  }
-
-  @keyframes effect {
-    50% {
-      border-color: transparent;
+    to {
+      width: (@wordLength * 1em);
     }
   }
 }

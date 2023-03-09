@@ -123,3 +123,7 @@ utils/dom loadJs 支持
 加入 cross-env
 
 控制process.env来打包 包括图片的复制
+
+`变化`
+
+message 留言

@@ -61,7 +61,7 @@
   },
   "scripts": {
     "dev": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm start",
-    "build": "cross-env PUBLIC_URL=./ BUILD_PATH=picture pnpm builder",
+    "build": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm builder",
     "lxy": "cross-env PUBLIC_URL=/lxy BUILD_PATH=lxy pnpm start",
     "gift": "cross-env pnpm imgCopy PUBLIC_URL=./ BUILD_PATH=lxy pnpm builder",
     "start": "pnpm imgCopy && node scripts/start.js",

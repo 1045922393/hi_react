@@ -127,3 +127,7 @@ utils/dom loadJs 支持
 `变化`
 
 message 留言
+
+`变化`
+
+content 根据打包显示文字

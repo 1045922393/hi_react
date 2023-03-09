@@ -5,14 +5,15 @@ import { useState, useEffect } from "react";
 import "./index.less";
 import BackBtn from "@/components/back";
 function Content() {
+  const isForXy = process.env.PUBLIC_URL !== "/picture";
   const navigate = useNavigate();
 
-  const [picList,setPicList] = useState([])
+  const [picList, setPicList] = useState([]);
   const [totalDay, setTotalDay] = useState(0);
 
   const { gsap, imagesLoaded } = window;
   useEffect(() => {
-    setPicList(window.pictureConfig.data)
+    setPicList(window.pictureConfig.data);
     const bodyDoc = document.querySelector("body");
     bodyDoc.classList.add("body_extend");
     const buttons = {
@@ -312,17 +313,17 @@ function Content() {
       <Link to={config.homepage + "/picture"}>图片</Link> */}
       <div className="app contents">
         <BackBtn
-          text={(totalDay + "").substring(0, 1)}
+          text={(totalDay + "").slice(-3, -2)}
           path="/album3d"
           style={{ right: 150 + "px" }}
         ></BackBtn>
         <BackBtn
-          text={(totalDay + "").substring(1, 2)}
+          text={(totalDay + "").slice(-2, -1)}
           path="/albumWall"
           style={{ right: 100 + "px" }}
         ></BackBtn>
         <BackBtn
-          text={(totalDay + "").substring(2, 3)}
+          text={(totalDay + "").slice(-1)}
           style={{ right: 50 + "px" }}
           path="/message"
         ></BackBtn>
@@ -375,31 +376,41 @@ function Content() {
           <div className="info__wrapper">
             <div className="info current--info">
               <h1 className="text name">
-                2022年05月14日 <br />
-                我们在一起啦
+                {isForXy ? `2022年05月14日` : "人生若只如初见，"} <br />
+                {isForXy ? `我们在一起啦` : "何事秋风悲画扇。"}
               </h1>
-              <h4 className="text location">梁晓怡 With 胡伟烨</h4>
-              <p className="text description">😁😁😁</p>
+              <h4 className="text location">
+                {isForXy ? `梁晓怡 With 胡伟烨` : "纳兰性德"}
+              </h4>
+              <p className="text description">
+                {isForXy ? `嘻嘻😁😁` : "木兰词"}
+              </p>
             </div>
 
             <div className="info next--info">
               <h1 className="text name">
-                今天是我们在一起的
+                {isForXy ? `今天是我们在一起的` : "执子之手，"}
                 <br />
-                第{totalDay}天啦
+                {isForXy ? `第${totalDay}天啦` : "与子偕老。"}
               </h1>
-              <h4 className="text location">大臭娃!</h4>
-              <p className="text description">你别再记错啦!!!</p>
+              <h4 className="text location">{isForXy ? `大臭娃!` : "先秦"}</h4>
+              <p className="text description">
+                {isForXy ? `你别再记错啦!!!` : "诗经·击鼓"}
+              </p>
             </div>
 
             <div className="info previous--info">
               <h1 className="text name">
-                让我们回顾下
+                {isForXy ? `让我们回顾下` : "人面不知何处去，"}
                 <br />
-                我们走过的日子吧
+                {isForXy ? `我们走过的日子吧` : "桃花依旧笑春风。"}
               </h1>
-              <h4 className="text location">准备好了吗</h4>
-              <p className="text description">PS:很多隐藏功能需要自己摸索噢</p>
+              <h4 className="text location">
+                {isForXy ? `准备好了吗` : "崔护"}
+              </h4>
+              <p className="text description">
+                {isForXy ? `PS:很多隐藏功能需要自己摸索噢` : "题都城南庄"}
+              </p>
             </div>
           </div>
         </div>

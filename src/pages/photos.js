@@ -39,7 +39,6 @@ function Pho() {
   function initMounted() {
     if (validatePurity(p) && p.endsWith("1") && page) {
       setPicList([...window.pPictureConfig.data]);
-      setSwitcher(true);
       return;
     }
     if(!p || !page) {
@@ -55,6 +54,7 @@ function Pho() {
 
   useEffect(() => {
     handleChangeBg(picList[0]?.path);
+    setSwitcher(true);
   }, [picList]);
 
   function handleSwitcher(fn) {
@@ -127,14 +127,12 @@ function Pho() {
         <div
           className="img_contain"
           onClick={handlePrePage}
-          onDoubleClick={handleChangeBg.bind(this, picList[1]?.path)}
         >
           <img className="btn" src={picList[1]?.path} alt="" />
         </div>
         <div
           className="img_contain"
           onClick={handleNextPage}
-          onDoubleClick={handleChangeBg.bind(this, picList[0]?.path)}
         >
           <img className="btn" src={picList[0]?.path} alt="" />
         </div>

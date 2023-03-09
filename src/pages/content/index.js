@@ -334,35 +334,21 @@ function Content() {
           <div className="cards__wrapper">
             <div className="card current--card">
               <div className="card__image">
-                {/* <img
-                  className="link_img"
-                  data-contents="/photoWall"
-                  src={picList[0]?.path}
-                  alt=""
-                /> */}
                 <img
                   className="link_img"
                   data-contents="/photoWall"
-                  src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/10.jpeg"
+                  src={picList[0]?.path}
                   alt=""
                 />
               </div>
             </div>
 
             <div className="card next--card">
-              {/* <div className="card__image">
-                <img
-                  className="link_img"
-                  data-contents="/picture"
-                  src={picList[1]?.path}
-                  alt=""
-                />
-              </div> */}
               <div className="card__image">
                 <img
                   className="link_img"
                   data-contents="/picture"
-                  src="https://static-mp-1c925fd0-d9e0-409d-b254-d061358b31f9.next.bspapp.com/assets/LXY/40.jpeg"
+                  src={picList[1]?.path}
                   alt=""
                 />
               </div>
@@ -370,12 +356,6 @@ function Content() {
 
             <div className="card previous--card">
               <div className="card__image">
-                {/* <img
-                  className="link_img"
-                  data-contents="/photo?p=100&page=1"
-                  src="https://api.isoyu.com/mm_images.php"
-                  alt=""
-                /> */}
                 <img
                   className="link_img"
                   data-contents="/photo"

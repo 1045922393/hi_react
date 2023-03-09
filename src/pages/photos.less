@@ -36,6 +36,17 @@
       background: rgba(0, 0, 0, 0.3);
     }
   }
+  .page_control {
+    .pagation();
+    top: unset;
+    bottom: 20%;
+    z-index: 20;
+    .page_btn {
+      padding: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+  }
   .img_box {
     margin-top: 100px;
     width: 50%;
@@ -92,6 +103,7 @@
     flex-direction: column;
     align-items: flex-end;
     width: 50%;
+    margin-top: 50px;
     margin-left: auto;
     // transition: 0.7s;
 
@@ -115,6 +127,7 @@
       padding: 5px;
       transform: rotateY(-45deg);
       transform-origin: right;
+      cursor: pointer;
 
       &:hover {
         transform: rotateY(0deg);

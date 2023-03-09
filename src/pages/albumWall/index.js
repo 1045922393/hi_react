@@ -91,7 +91,7 @@ function AlbumWall() {
     function autoMove(){
       oWrap.style.animation = "run 20s infinite linear";
     }
-    const fn = autoPlay ? autoMove :listenMouse;
+    const fn = autoPlay ? listenMouse : autoMove;
     fn();
     return () => {
       clearInterval(timeId);

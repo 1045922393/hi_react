@@ -115,3 +115,11 @@ utils/dom loadJs 支持
 整合lxy分支
 
 优化photo交互
+
+`变化`
+
+修改index.html信息内容
+
+加入 cross-env
+
+控制process.env来打包

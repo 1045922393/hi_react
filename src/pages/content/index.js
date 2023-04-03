@@ -291,9 +291,15 @@ function Content() {
   });
 
   useEffect(() => {
-    const start_date = new Date("2022-05-14 00:00:00");
+    // const start_date = new Date("2022-05-14 00:00:00");
+    const start_date = new Date("2023-03-27 00:00:00");
     const end_date = new Date();
-    const days = Math.ceil((end_date - start_date) / 86400000);
+    let days = Math.ceil((end_date - start_date) / 86400000) + '';
+    const originLeng = days.length;
+    const leng = 3;
+    for(let i = 0; i < leng - originLeng; i++) {
+      days = '0' + days;
+    }
     setTotalDay(days);
   });
 
@@ -326,6 +332,11 @@ function Content() {
           text={(totalDay + "").slice(-1)}
           style={{ right: 50 + "px" }}
           path="/message"
+        ></BackBtn>
+        <BackBtn
+          text='A'
+          path="/openai"
+          style={{ left: 50 + "px" }}
         ></BackBtn>
         <div className="cardList">
           <button className="cardList__btn btn btn--left">

@@ -131,3 +131,7 @@ message 留言
 `变化`
 
 content 根据打包显示文字
+
+`变化`
+
+openAi 加入Gpt的聊天和生成图片功能

@@ -92,7 +92,7 @@ function OpenAi() {
   let [chatContent, setChatContent] = useState("");
   function initOpenai() {
     const OPENAI_API_KEY =
-      "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";
+      "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";
     const configuration = new Configuration({
       organization: "org-kPyJllacGAY6Q3KKa4k6NgHf",
       apiKey: OPENAI_API_KEY,

@@ -338,6 +338,11 @@ function Content() {
           path="/openai"
           style={{ left: 50 + "px" }}
         ></BackBtn>
+        <BackBtn
+          text='C'
+          path="/chess"
+          style={{ left: 100 + "px" }}
+        ></BackBtn>
         <div className="cardList">
           <button className="cardList__btn btn btn--left">
             <div className="icon"></div>

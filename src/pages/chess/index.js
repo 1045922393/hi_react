@@ -207,7 +207,7 @@ function Chess() {
     clearTimeout(timeId);
     timeId = setTimeout(() => {
       setInfoMessage("");
-    }, 1500);
+    }, 2000);
   }, [infoMessage]);
 
   // 初始化棋盘

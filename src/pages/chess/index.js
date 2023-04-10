@@ -1,6 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import "./index.less";
 import BackBtn from "@/components/back";
+import { Snackbar, Alert } from "@mui/material";
+import Button from "@mui/material/Button";
+
+const totalCount = 60;
 
 let chesses = [
   [
@@ -122,7 +126,7 @@ let chesses = [
 ];
 
 // 深拷贝
-function deepClone(obj ) {
+function deepClone(obj) {
   return JSON.parse(JSON.stringify(obj || {}));
 }
 
@@ -149,40 +153,112 @@ function getOneChess() {
   return oneChess;
 }
 
+let timeId = null;
+
 // 棋子组件
 function Chess() {
   let [chessboard, setChessboard] = useState([]);
   let [redoChessboard, setRedoChessboard] = useState([]);
+  let [currentCount, setCurrentCount] = useState({
+    black: totalCount,
+    red: totalCount,
+  });
   let [highChessInfo, setHighChessInfo] = useState({});
+  let [chessBg, setChessBg] = useState("");
+  // 0 黑 1 红
+  let [takeTurn, setTakeTurn] = useState("");
+
+  // 警告
+  let [infoMessage, setInfoMessage] = useState("");
+
+  let [blackBlood, setBlackBlood] = useState(totalCount);
+  let [redBlood, setRedBlood] = useState(totalCount);
+
+  let blackBloodPercent = useMemo(() => {
+    let result = ((totalCount - blackBlood) / totalCount) * 100;
+    if (result >= 100) {
+      result = 100;
+      setInfoMessage("游戏结束, 红色方胜");
+    }
+    return result + "%";
+  }, [blackBlood]);
+  let redBloodPercent = useMemo(() => {
+    let result = ((totalCount - redBlood) / totalCount) * 100;
+    if (result >= 100) {
+      result = 100;
+      setInfoMessage("游戏结束, 黑色方胜");
+    }
+    return result + "%";
+  }, [redBlood]);
+
+  const changeTurn = () => {
+    setTakeTurn(Math.abs(takeTurn - 1) + "");
+  };
+
+  let open = useMemo(() => {
+    if (infoMessage) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [infoMessage]);
+
+  useEffect(() => {
+    clearTimeout(timeId);
+    timeId = setTimeout(() => {
+      setInfoMessage("");
+    }, 1500);
+  }, [infoMessage]);
 
   // 初始化棋盘
   useEffect(() => {
-    let temp = new Array(8).fill(new Array(4).fill(null));
+    // 长宽
+    const h = window.innerHeight;
+    const w = window.innerWidth;
+    let width = 8;
+    let height = 4;
+    if (w < h) {
+      width = 4;
+      height = 8;
+    }
+    let temp = new Array(width).fill(new Array(height).fill(null));
     temp.forEach((item, index) => {
       temp[index] = temp[index].map(() => {
         return getOneChess();
       });
     });
+    // 随机势力
+    setTakeTurn(random(0, 1) + "");
+    setChessBg(window.pictureConfig.data[1].path);
     setChessboard(temp);
     setRedoChessboard(temp);
   }, []);
 
   const openChess = (chess, x, y) => {
+    saveRedoChess();
     chessboard[x][y].hide = false;
     chessboard[x][y].x = x;
     chessboard[x][y].y = y;
     setChessboard(deepClone(chessboard));
     setHighChessInfo({});
+    changeTurn();
+    setDisabledRedo(false);
   };
 
   const saveRedoChess = () => {
     setRedoChessboard(deepClone(chessboard));
   };
 
+  const [disabledRedo, setDisabledRedo] = useState(false);
   const redo = () => {
     setChessboard(deepClone(redoChessboard));
+    changeTurn();
+    setDisabledRedo(true);
+    setBlackBlood(currentCount.black);
+    setRedBlood(currentCount.red);
   };
 
+  // 移动/交换位置
   const transformChess = (chess, x, y) => {
     saveRedoChess();
     chessboard[x][y] = deepClone(highChessInfo);
@@ -191,6 +267,19 @@ function Chess() {
     chessboard[highChessInfo.x][highChessInfo.y] = {};
     setChessboard(deepClone(chessboard));
     setHighChessInfo({});
+    changeTurn();
+    setDisabledRedo(false);
+  };
+
+  // 记分
+  const calcCount = (chess) => {
+    if (chess.id[0] === "0") {
+      // 黑棋被吃
+      setBlackBlood(blackBlood - chess.mark);
+    } else if (chess.id[0] === "1") {
+      // 红棋被吃
+      setRedBlood(redBlood - chess.mark);
+    }
   };
 
   const eatChess = (chess, x, y) => {
@@ -207,11 +296,16 @@ function Chess() {
       Math.abs(x + y - (highChessInfo.x + highChessInfo.y)) !== 1
     ) {
       transformChess(chess, x, y);
+      setCurrentCount({
+        black: blackBlood,
+        red: redBlood,
+      });
+      calcCount(chess);
       return;
     }
 
     if (Math.abs(x + y - (highChessInfo.x + highChessInfo.y)) !== 1) {
-      alert("非法操作");
+      setInfoMessage("非法操作");
       setHighChessInfo({});
       return;
     }
@@ -231,9 +325,14 @@ function Chess() {
       highChessInfo.id[0] !== chess.id[0]
     ) {
       transformChess(chess, x, y);
+      setCurrentCount({
+        black: blackBlood,
+        red: redBlood,
+      });
+      calcCount(chess);
       return;
     }
-    alert("非法操作");
+    setInfoMessage("非法操作");
     setHighChessInfo({});
   };
 
@@ -249,6 +348,10 @@ function Chess() {
 
     // 点击翻开的棋子
     if (JSON.stringify(highChessInfo) === "{}") {
+      if (chess.id[0] !== takeTurn) {
+        setInfoMessage("请操作自己的棋子");
+        return;
+      }
       setHighChessInfo(chess);
       return;
     }
@@ -263,42 +366,80 @@ function Chess() {
     eatChess(chess, x, y);
   };
 
-  const ChessboardEntity = () =>
-    chessboard.map((item, index) => {
-      return (
-        <div key={index} className="out">
-          {item.map((childItem, childIndex) => {
-            return (
-              <div
-                className={`inline ${
-                  childItem.id && childItem.id[0] === "0" ? "black" : "red"
-                } ${childItem.hide ? "hide" : ""} ${
-                  !childItem.hide &&
-                  highChessInfo.x === index &&
-                  highChessInfo.y === childIndex
-                    ? "selected"
-                    : ""
-                }`}
-                key={childIndex}
-                onClick={() => handleClick(childItem, index, childIndex)}
-              >
-                {childItem.name && (
-                  <div className="chess">{childItem.name}</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      );
-    });
-
+  const ChessboardEntity = () => {
+    return (
+      <div className="chessOut">
+        {chessboard.map((item, index) => {
+          return (
+            <div key={index} className="out">
+              {item.map((childItem, childIndex) => {
+                return (
+                  <div
+                    className={`inline ${
+                      childItem.id && childItem.id[0] === "0" ? "black" : "red"
+                    } ${childItem.hide ? "hide" : ""} ${
+                      !childItem.hide &&
+                      highChessInfo.x === index &&
+                      highChessInfo.y === childIndex
+                        ? "selected"
+                        : ""
+                    }`}
+                    key={childIndex}
+                    onClick={() => handleClick(childItem, index, childIndex)}
+                  >
+                    {childItem.name && (
+                      <div className="chess">{childItem.name}</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
   return (
-    <div className="chess_page">
+    <div className="chess_page" style={{ backgroundImage: `url(${chessBg})` }}>
       <BackBtn></BackBtn>
+      <div className="tip_btns">
+        <div className={`tip_chess ${takeTurn === "0" ? "black" : "red"}`}>
+          {takeTurn === "0" ? "将" : "帅"}
+        </div>
+        <Button
+          disabled={disabledRedo}
+          onClick={redo}
+          className="btn"
+          variant="contained"
+        >
+          Redo
+        </Button>
+      </div>
+      <div className="blood">
+        <div className="blood_item black">
+          <div className="label">将</div>
+          <div className="value">
+            <div className="mask" style={{ width: blackBloodPercent }}></div>
+          </div>
+        </div>
+        <div className="blood_item red">
+          <div className="label">帅</div>
+          <div className="value">
+            <div className="mask" style={{ width: redBloodPercent }}></div>
+          </div>
+        </div>
+      </div>
       <ChessboardEntity></ChessboardEntity>
-      <button className="btn" onClick={redo}>
-        Redo
-      </button>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+      >
+        {infoMessage ? (
+          <Alert severity="warning">{infoMessage}</Alert>
+        ) : (
+          <div></div>
+        )}
+      </Snackbar>
     </div>
   );
 }

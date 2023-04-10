@@ -2,6 +2,19 @@
   "name": "hi_react",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm start",
+    "both": "pnpm build && pnpm gift",
+    "build": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm builder",
+    "lxy": "cross-env PUBLIC_URL=/lxy BUILD_PATH=lxy pnpm start",
+    "gift": "cross-env PUBLIC_URL=./ BUILD_PATH=lxy pnpm builder",
+    "start": "pnpm imgCopy && node scripts/start.js",
+    "builder": "pnpm imgCopy && node scripts/build.js",
+    "test": "node scripts/test.js",
+    "imgCopy": "node scripts/imgCopy.js",
+    "downImg": "node node/downloadImg.js",
+    "newPage": "node scripts/newPage.js"
+  },
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@emotion/react": "^11.10.6",
@@ -65,19 +78,6 @@
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
-  },
-  "scripts": {
-    "dev": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm start",
-    "both": "pnpm build && pnpm gift",
-    "build": "cross-env PUBLIC_URL=/picture BUILD_PATH=picture pnpm builder",
-    "lxy": "cross-env PUBLIC_URL=/lxy BUILD_PATH=lxy pnpm start",
-    "gift": "cross-env PUBLIC_URL=./ BUILD_PATH=lxy pnpm builder",
-    "start": "pnpm imgCopy && node scripts/start.js",
-    "builder": "pnpm imgCopy && node scripts/build.js",
-    "test": "node scripts/test.js",
-    "imgCopy": "node scripts/imgCopy.js",
-    "downImg": "node node/downloadImg.js",
-    "newPage": "node scripts/newPage.js"
   },
   "eslintConfig": {
     "extends": [

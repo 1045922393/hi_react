@@ -1,22 +1,73 @@
 @chessSize: 80px;
-.chess_page{
-  background-color: darkgoldenrod;
-  display: flex;
+.chess_page {
+  background: url("") center center/cover no-repeat;
+  // display: flex;
   height: 100vh;
 
   .btn {
     height: 28px;
-    background-color: aqua;
     border: none;
     margin: 4px;
   }
-  
-  .out {
-    // border: 1px solid #000;
+
+  .chessOut {
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tip_btns {
+    display: flex;
+    justify-content: space-around;
+    max-width: 50vw;
+    margin: 0 auto;
+  }
+
+  .blood {
+    width: 30vw;
+    min-width: 300px;
+    margin: 0 auto;
+
+    .blood_item {
+      &.black {
+        --fontColor: #000044;
+      }
+      &.red {
+        --fontColor: #d01732;
+      }
+      display: flex;
+      padding: 8px;
+      .label {
+        width: 20px;
+        font-weight: bold;
+        color: var(--fontColor);
+        text-shadow: 0 0 2px 2px #fffeee;
+      }
+
+      .value {
+        flex: 1;
+        position: relative;
+        background: linear-gradient(
+          90deg,
+          var(--fontColor),
+          rgb(116, 243, 116)
+        );
+
+        .mask {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 0%;
+          transition: width 1s;
+          background: #eee;
+        }
+      }
+    }
   }
 
   .inline {
-    border: 1px solid #000;
+    border: thick double #0075ce;
     width: @chessSize;
     height: @chessSize;
     line-height: @chessSize;
@@ -26,7 +77,7 @@
     justify-content: center;
 
     &.red {
-      --color:#d01732;
+      --color: #d01732;
     }
 
     &.black {
@@ -42,13 +93,19 @@
       color: var(--color);
       border: 1px solid var(--color);
       border-radius: 50%;
-      background-color: #d3dfe2;
+      background: linear-gradient(
+        217deg,
+        rgba(208, 23, 50, 0.8) 0%,
+        rgba(255, 255, 255, 0.2) 40%,
+        rgba(255, 255, 255, 0.2) 60%,
+        rgba(0, 0, 68, 0.8) 100%;
+      );
       box-shadow: 0px 0px 2px var(--color);
       text-shadow: 0px 0px 1px var(--color);
     }
 
     &.hide {
-      --color: yellow;
+      --color: transparent;
       // --color: #d3dfe2;
 
       .chess {
@@ -58,8 +115,38 @@
 
     &.selected {
       .chess {
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
     }
+  }
+
+  .tip_chess {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: var(--bg);
+    color: #fffeee;
+    text-align: center;
+    font-weight: bold;
+    line-height: 40px;
+
+    &.red {
+      --bg: #d01732;
+    }
+
+    &.black {
+      --bg: #000044;
+    }
+  }
+
+  .transformIn {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+    padding: 8px 16px;
+    border: 1px solid #000;
+    background: #c2c204c1;
   }
 }
